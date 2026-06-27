@@ -1,391 +1,541 @@
-# Global-Trust-Bank-International-
-Bank website for international payments
-# 🏦 Global Trust Bank
+# 🏦 Global Trust Bank International
 
 ## Enterprise Digital Banking Platform
 
-Global Trust Bank is a modern fintech platform inspired by PayPal, Revolut, Wise, and Monzo.
-
-The goal is to build a production-ready online banking system with enterprise security, modern UI, scalable architecture, and a complete administrative backend.
+Global Trust Bank is a modern fintech platform inspired by PayPal, Revolut, Wise, and Monzo. A production-ready online banking system with enterprise security, modern UI, scalable architecture, and a complete administrative backend.
 
 ---
 
-# Tech Stack
+## 📋 Table of Contents
 
-Frontend
-- Next.js 15
-- React 19
-- TypeScript
-- TailwindCSS
-- Framer Motion
-- React Hook Form
-- Chart.js
-- Axios
-
-Backend
-- Node.js
-- Express.js
-- PostgreSQL
-- Prisma ORM
-- JWT Authentication
-- bcrypt
-- Redis (sessions)
-- Socket.io (real-time)
-
-Storage
-- Cloudinary (KYC uploads)
-- AWS S3 ready
-
-Payments
-- Stripe
-- Paystack
-- Flutterwave
-- Bank Transfer API
-
-Deployment
-- Docker
-- GitHub Actions
-- Railway
-- Render
-- Vercel
+- [Tech Stack](#tech-stack)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [API Documentation](#api-documentation)
+- [Database Schema](#database-schema)
+- [Security](#security)
+- [Deployment](#deployment)
 
 ---
 
-# Features
+## 🛠 Tech Stack
 
-## Authentication
+### Frontend
+- **Next.js 15** - React framework with SSR/SSG
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **TailwindCSS** - Styling
+- **Framer Motion** - Animations
+- **React Hook Form** - Form management
+- **Chart.js** - Data visualization
+- **Axios** - HTTP client
 
-- Register
-- Login
-- Logout
-- Forgot Password
-- Reset Password
-- Email Verification
-- Two Factor Authentication
-- JWT Authentication
-- Refresh Tokens
+### Backend
+- **Node.js** - Runtime
+- **Express.js** - API framework
+- **PostgreSQL** - Database
+- **Prisma ORM** - Database client
+- **JWT** - Authentication
+- **bcrypt** - Password hashing
+- **Redis** - Session management
+- **Socket.io** - Real-time updates
 
----
+### Storage & Payment
+- **Cloudinary** - File uploads (KYC)
+- **AWS S3** - Cloud storage
+- **Stripe** - Payment processing
+- **Paystack** - African payments
+- **Flutterwave** - Multi-currency payments
 
-## User Dashboard
-
-Display
-
-- Current Balance
-- Available Balance
-- Pending Balance
-
-Cards
-
-- Total Deposits
-- Total Withdrawals
-- Total Transfers
-
-Charts
-
-- Monthly Spending
-- Deposits
-- Withdrawals
-
-Recent Transactions
-
-Notifications
-
-Profile Completion
+### Deployment
+- **Docker** - Containerization
+- **GitHub Actions** - CI/CD
+- **Railway/Render** - Backend hosting
+- **Vercel** - Frontend hosting
 
 ---
 
-## Wallet
+## ✨ Features
 
-Support
+### 🔐 Authentication
+- User registration & login
+- Email verification
+- Two-factor authentication (2FA)
+- JWT + Refresh tokens
+- Password reset
+- Session management
 
-- USD
-- EUR
-- GBP
+### 💳 User Dashboard
+**Display:**
+- Current, available, and pending balance
+- Total deposits, withdrawals, transfers
+- Monthly spending charts
+- Recent transactions
+- Notifications
 
-Future currencies should be easy to add.
+**Cards:**
+- Debit card management
+- Card limits
+- Card freeze/block
 
----
+### 💰 Wallet Management
+- Multi-currency support (USD, EUR, GBP)
+- Easy currency addition
+- Real-time balance updates
+- Wallet history
 
-## Banking
+### 🏦 Banking Operations
+**Users can:**
+- Deposit funds
+- Withdraw funds
+- Transfer money (local & international)
+- Receive money
+- Generate transaction receipts
+- Download statements
+- Search & filter transactions
 
-Users can
-
-- Deposit
-- Withdraw
-- Transfer Money
-- Receive Money
-- Generate Transaction Receipts
-- Download Statements
-- Search Transactions
-- Filter Transactions
-
-Each transaction must have
-
-- Unique Reference ID
-- Status
+**Transaction Details:**
+- Unique reference ID
+- Status (pending, completed, failed)
 - Timestamp
 - Currency
 - Amount
-- Sender
-- Receiver
+- Sender/Receiver info
 
----
-
-## KYC
-
-Upload
-
+### 🆔 KYC (Know Your Customer)
+**Document Upload:**
 - Passport
 - National ID
 - Driver License
+- Selfie verification
+- Proof of address
 
-Upload
+**Admin Actions:**
+- Approve/Reject submissions
+- Request resubmission
 
-- Selfie
-
-Upload
-
-- Proof of Address
-
-Admin can
-
-- Approve
-- Reject
-- Request Resubmission
-
----
-
-## Notifications
-
-Users receive
-
+### 🔔 Notifications
+**Types:**
 - Deposit alerts
 - Withdrawal alerts
 - Login alerts
 - Transfer alerts
 - Security alerts
 
-Support
-
+**Channels:**
 - Email
 - SMS
 - In-app notifications
 
----
+### 👨‍💼 Admin Dashboard
+**Analytics:**
+- Total users & transactions
+- Total deposits/withdrawals
+- Revenue tracking
+- Currency distribution
 
-## Admin Dashboard
+**User Management:**
+- Create/Edit/Delete users
+- Freeze/Unfreeze accounts
+- Credit/Debit wallets
+- Reset passwords
+- Send notifications
 
-Admin authentication
+**KYC Management:**
+- Approve/Reject submissions
+- Request additional documents
 
-Dashboard should display
-
-- Total Users
-- Total Deposits
-- Total Withdrawals
-- Total Transactions
-- Revenue
-- Currency Distribution
-
-Admin can
-
-- Create Users
-- Edit Users
-- Freeze Accounts
-- Delete Accounts
-- Credit Wallet
-- Debit Wallet
-- Approve KYC
-- Reject KYC
-- Reset Password
-- Send Notifications
-- Export Reports
-- View Audit Logs
+**System:**
+- Export reports
+- View audit logs
+- Manage system settings
 
 ---
 
-## Security
+## 📁 Project Structure
 
-Use
-
-- bcrypt password hashing
-- JWT Authentication
-- Role Based Access
-- CSRF Protection
-- Helmet
-- Rate Limiting
-- XSS Protection
-- SQL Injection Protection
-
-Never store passwords in plain text.
+```
+Global-Trust-Bank-International/
+├── client/                          # Frontend (Next.js)
+│   ├── app/
+│   │   ├── (auth)/                 # Auth routes
+│   │   ├── (dashboard)/            # User dashboard
+│   │   ├── admin/                  # Admin dashboard
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── auth/
+│   │   ├── dashboard/
+│   │   ├── admin/
+│   │   ├── shared/
+│   │   └── charts/
+│   ├── hooks/
+│   │   ├── useAuth.ts
+│   │   ├── useUser.ts
+│   │   └── useTransactions.ts
+│   ├── lib/
+│   │   ├── axios.ts
+│   │   ├── constants.ts
+│   │   └── utils.ts
+│   ├── context/
+│   │   └── AuthContext.tsx
+│   ├── styles/
+│   │   └── globals.css
+│   ├── public/
+│   ├── .env.local
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── next.config.js
+│
+├── server/                          # Backend (Express)
+│   ├── src/
+│   │   ├── routes/
+│   │   │   ├── auth.routes.ts
+│   │   │   ├── user.routes.ts
+│   │   │   ├── wallet.routes.ts
+│   │   │   ├── transaction.routes.ts
+│   │   │   ├── kyc.routes.ts
+│   │   │   └── admin.routes.ts
+│   │   ├── controllers/
+│   │   │   ├── auth.controller.ts
+│   │   │   ├── user.controller.ts
+│   │   │   ├── wallet.controller.ts
+│   │   │   ├── transaction.controller.ts
+│   │   │   ├── kyc.controller.ts
+│   │   │   └── admin.controller.ts
+│   │   ├── middleware/
+│   │   │   ├── auth.middleware.ts
+│   │   │   ├── errorHandler.ts
+│   │   │   ├── rateLimit.ts
+│   │   │   └── validation.ts
+│   │   ├── services/
+│   │   │   ├── auth.service.ts
+│   │   │   ├── user.service.ts
+│   │   │   ├── wallet.service.ts
+│   │   │   ├── transaction.service.ts
+│   │   │   ├── kyc.service.ts
+│   │   │   ├── payment.service.ts
+│   │   │   └── email.service.ts
+│   │   ├── models/
+│   │   │   └── (Prisma generated)
+│   │   ├── utils/
+│   │   │   ├── jwt.ts
+│   │   │   ├── hash.ts
+│   │   │   ├── validators.ts
+│   │   │   └── helpers.ts
+│   │   ├── config/
+│   │   │   ├── database.ts
+│   │   │   ├── redis.ts
+│   │   │   └── stripe.ts
+│   │   ├── types/
+│   │   │   └── index.ts
+│   │   └── app.ts
+│   ├── prisma/
+│   │   ├── schema.prisma
+│   │   └── migrations/
+│   ├── .env
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── Dockerfile
+│
+├── database/
+│   ├── migrations/
+│   └── seeds/
+│
+├── docs/
+│   ├── API.md
+│   ├── SETUP.md
+│   ├── DATABASE.md
+│   └── SECURITY.md
+│
+├── docker-compose.yml
+├── .github/
+│   └── workflows/
+│       ├── deploy-frontend.yml
+│       └── deploy-backend.yml
+├── .gitignore
+└── README.md
+```
 
 ---
 
-## UI Design
+## 🚀 Getting Started
 
-Style should resemble
+### Prerequisites
+- Node.js 18+
+- PostgreSQL 14+
+- Redis
+- Docker (optional)
 
-- PayPal
-- Revolut
-- Monzo
+### Installation
 
-Theme
+**1. Clone the repository:**
+```bash
+git clone https://github.com/Daddypupa/Global-Trust-Bank-International-.git
+cd Global-Trust-Bank-International-
+```
 
-Primary
+**2. Setup Backend:**
+```bash
+cd server
+npm install
+cp .env.example .env
+npx prisma migrate dev
+npm run dev
+```
 
-- Navy Blue
+**3. Setup Frontend:**
+```bash
+cd ../client
+npm install
+cp .env.local.example .env.local
+npm run dev
+```
 
-Accent
+**4. Access the application:**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5000
+- Admin: http://localhost:3000/admin
 
-- Gold
+---
 
-Secondary
+## 🔌 API Documentation
 
-- Green
+### Authentication Endpoints
 
-Features
+```
+POST /api/auth/register
+POST /api/auth/login
+POST /api/auth/logout
+POST /api/auth/verify-email
+POST /api/auth/forgot-password
+POST /api/auth/reset-password
+POST /api/auth/refresh-token
+POST /api/auth/2fa/enable
+POST /api/auth/2fa/verify
+```
 
-- Dark Mode
-- Light Mode
+### User Endpoints
+
+```
+GET  /api/users/profile
+PUT  /api/users/profile
+GET  /api/users/kyc
+POST /api/users/kyc/upload
+PUT  /api/users/settings
+```
+
+### Wallet Endpoints
+
+```
+GET  /api/wallet/balance
+POST /api/wallet/deposit
+POST /api/wallet/withdraw
+POST /api/wallet/transfer
+GET  /api/wallet/history
+```
+
+### Transaction Endpoints
+
+```
+GET  /api/transactions
+GET  /api/transactions/:id
+GET  /api/transactions/search
+POST /api/transactions/receipt
+```
+
+### KYC Endpoints
+
+```
+POST /api/kyc/upload
+GET  /api/kyc/status
+GET  /api/kyc/history
+```
+
+### Admin Endpoints
+
+```
+GET    /api/admin/dashboard
+GET    /api/admin/users
+POST   /api/admin/users
+PUT    /api/admin/users/:id
+DELETE /api/admin/users/:id
+POST   /api/admin/wallet/credit
+POST   /api/admin/wallet/debit
+GET    /api/admin/kyc
+POST   /api/admin/kyc/:id/approve
+POST   /api/admin/kyc/:id/reject
+GET    /api/admin/transactions
+GET    /api/admin/reports
+GET    /api/admin/audit-logs
+```
+
+---
+
+## 🗄 Database Schema
+
+### Core Tables
+
+**users**
+- id (UUID)
+- email (unique)
+- password (hashed)
+- firstName, lastName
+- phone
+- verified
+- twoFactorEnabled
+- kycStatus (pending, approved, rejected)
+- accountStatus (active, frozen, suspended)
+- role (user, admin)
+- createdAt, updatedAt
+
+**wallets**
+- id (UUID)
+- userId (FK)
+- currency (USD, EUR, GBP)
+- balance
+- availableBalance
+- pendingBalance
+- createdAt, updatedAt
+
+**transactions**
+- id (UUID)
+- referenceId (unique)
+- senderId (FK)
+- receiverId (FK)
+- walletId (FK)
+- type (deposit, withdrawal, transfer)
+- amount
+- currency
+- status (pending, completed, failed)
+- description
+- timestamp
+- createdAt, updatedAt
+
+**kyc**
+- id (UUID)
+- userId (FK)
+- documentType (passport, id, license)
+- documentUrl
+- selfieUrl
+- addressProofUrl
+- status (pending, approved, rejected)
+- rejectionReason
+- submittedAt
+- reviewedAt, reviewedBy
+
+**notifications**
+- id (UUID)
+- userId (FK)
+- type (deposit, withdrawal, login, transfer, security)
+- title, message
+- read
+- createdAt
+
+**audit_logs**
+- id (UUID)
+- userId (FK)
+- action
+- entityType
+- entityId
+- changes
+- timestamp
+
+**sessions**
+- id (UUID)
+- userId (FK)
+- token
+- expiresAt
+- createdAt
+
+---
+
+## 🔒 Security
+
+### Implementation
+- ✅ bcrypt password hashing (10 rounds)
+- ✅ JWT authentication with expiration
+- ✅ Role-Based Access Control (RBAC)
+- ✅ CSRF protection (tokens)
+- ✅ Helmet.js security headers
+- ✅ Rate limiting (express-rate-limit)
+- ✅ XSS protection (HTML sanitization)
+- ✅ SQL injection prevention (Prisma parameterized queries)
+- ✅ Input validation & sanitization
+- ✅ HTTPS enforcement
+- ✅ Secure password reset flow
+- ✅ Session management with Redis
+- ✅ Two-factor authentication (TOTP)
+- ✅ Audit logging for all admin actions
+
+### Best Practices
+- Never store passwords in plain text
+- Use environment variables for secrets
+- Implement request signing for sensitive operations
+- Enable CORS selectively
+- Regular security audits
+- Keep dependencies updated
+
+---
+
+## 🎨 UI Design
+
+**Theme:**
+- **Primary:** Navy Blue
+- **Accent:** Gold
+- **Secondary:** Green
+
+**Features:**
+- Dark Mode & Light Mode
 - Responsive Design
-- Mobile First
-- Glassmorphism
+- Mobile First Approach
+- Glassmorphism effects
 - Smooth Animations
 
 ---
 
-## Project Structure
+## 🚢 Deployment
 
-/client
+### Backend (Railway/Render)
+1. Connect GitHub repository
+2. Set environment variables
+3. Configure PostgreSQL database
+4. Deploy automatically on push
 
-/pages
+### Frontend (Vercel)
+1. Import Next.js project
+2. Set environment variables
+3. Deploy automatically on push
 
-/components
-
-/hooks
-
-/context
-
-/services
-
-/assets
-
-/server
-
-/routes
-
-/controllers
-
-/middleware
-
-/models
-
-/prisma
-
-/utils
-
-/uploads
-
-/database
-
-/docs
+### Docker
+```bash
+docker-compose up -d
+```
 
 ---
 
-## API Endpoints
+## 📝 License
 
-POST /api/auth/register
-
-POST /api/auth/login
-
-POST /api/auth/logout
-
-POST /api/auth/forgot-password
-
-POST /api/auth/reset-password
-
-GET /api/users/profile
-
-PUT /api/users/profile
-
-POST /api/wallet/deposit
-
-POST /api/wallet/withdraw
-
-POST /api/wallet/transfer
-
-GET /api/transactions
-
-GET /api/admin/users
-
-POST /api/admin/create-user
-
-PUT /api/admin/update-user
-
-DELETE /api/admin/delete-user
-
-POST /api/admin/credit
-
-POST /api/admin/debit
-
-POST /api/admin/approve-kyc
-
-POST /api/admin/reject-kyc
+This project is licensed under the MIT License.
 
 ---
 
-## Database
+## 👨‍💻 Contributing
 
-Tables
-
-Users
-
-Wallets
-
-Transactions
-
-KYC
-
-Notifications
-
-AuditLogs
-
-Sessions
-
-Currencies
-
-Cards
-
-Beneficiaries
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
-## Dashboard Widgets
+## 📧 Contact & Support
 
-Balance Card
-
-Income
-
-Expenses
-
-Transaction Graph
-
-Latest Transactions
-
-Exchange Rates
-
-Notifications
-
-Quick Actions
-
-Analytics
+For support, email: support@globaltrustbank.com
 
 ---
 
-## Final Goal
-
-Build a complete enterprise-grade online banking application that is secure, scalable, responsive, production-ready, and easily deployable.
-
-The application should be fully documented, modular, and maintainable with clean code architecture.
-
-Every feature must function as a real banking platform, not merely a static demonstration.
+**Last Updated:** June 2026  
+**Status:** 🚀 In Development

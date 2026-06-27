@@ -1,0 +1,181 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String       @id @default(cuid())
+  email                 String       @unique
+  password              String
+  firstName             String
+  lastName              String
+  phone                 String?
+  avatar                String?
+  verified              Boolean      @default(false)
+  verificationToken     String?
+  verificationTokenExp  DateTime?
+  twoFactorEnabled      Boolean      @default(false)
+  twoFactorSecret       String?
+  kycStatus             KYCStatus    @default(PENDING)
+  accountStatus         AccountStatus @default(ACTIVE)
+  role                  Role         @default(USER)
+  resetPasswordToken    String?
+  resetPasswordTokenExp DateTime?
+  lastLogin             DateTime?
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+
+  wallets          Wallet[]
+  transactions     Transaction[]
+  sentTransactions Transaction[] @relation("sender")
+  kyc              KYC?
+  notifications    Notification[]
+  auditLogs        AuditLog[]
+  sessions         Session[]
+
+  @@map("users")
+}
+
+model Wallet {
+  id               String   @id @default(cuid())
+  userId           String
+  currency         String   @default("USD")
+  balance          Float    @default(0)
+  availableBalance Float    @default(0)
+  pendingBalance   Float    @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@unique([userId, currency])
+  @@map("wallets")
+}
+
+model Transaction {
+  id          String            @id @default(cuid())
+  referenceId String            @unique @default(cuid())
+  senderId    String
+  receiverId  String?
+  walletId    String
+  type        TransactionType
+  amount      Float
+  currency    String
+  status      TransactionStatus @default(PENDING)
+  description String?
+  metadata    String?
+  timestamp   DateTime          @default(now())
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  sender   User   @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User?  @relation(fields: [receiverId], references: [id], onDelete: SetNull)
+  wallet   Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  @@index([senderId])
+  @@index([receiverId])
+  @@index([walletId])
+  @@map("transactions")
+}
+
+model KYC {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  documentType    String
+  documentUrl     String
+  selfieUrl       String
+  addressProofUrl String
+  status          KYCStatus @default(PENDING)
+  rejectionReason String?
+  submittedAt     DateTime  @default(now())
+  reviewedAt      DateTime?
+  reviewedBy      String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("kyc")
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("notifications")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  action     String
+  entityType String
+  entityId   String?
+  changes    String?
+  timestamp  DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@map("audit_logs")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum KYCStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum AccountStatus {
+  ACTIVE
+  FROZEN
+  SUSPENDED
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  TRANSFER
+  RECEIVE
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
